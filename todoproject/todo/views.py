@@ -34,6 +34,10 @@ class TodoDetailView(View):
         task_form = TaskForm(instance=task)
 
         comments = Comment.objects.filter(task=task).order_by('-created_at')
+        comment_form = CommentForm(instance=task)
+
+        tags = Tag.objects.filter(task=task)
+        tag_form = TagForm(instance=task)
 
         return render(
             request=request,
@@ -41,7 +45,8 @@ class TodoDetailView(View):
             context={
                 'task_form': task_form,
                 'id': task_id,
-                'comments': comments
+                'comments': comments,
+                'tags': tags
             }
         )
 
