@@ -1,3 +1,4 @@
+<h2>Task Detail</h2>
 <form action="{% url 'task' id %}" method="POST">
     {% csrf_token %}
     {{ task_form }}
@@ -7,12 +8,22 @@
 
 <hr>
 <h3>Tags</h3>
+<form action="{% url 'task' id %}" method="POST">
+    {% csrf_token %}
+    {{ tag_form }}
+    <input type="submit" name="add_tag" value="Tag" />
+</form>
 {% for tag in tags %}
     <span>{{ tag.name }}</span>
 {% endfor %}
 
 <hr>
 <h3>Comments</h3>
+<form action="{% url 'task' id %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form }}
+    <input type="submit" name="save_comment" value="Add" />
+</form>
 <ul>
     {% for comment in comments %}
         <li>{{ comment.body }}</li>

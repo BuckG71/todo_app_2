@@ -46,14 +46,18 @@ class TodoDetailView(View):
                 'task_form': task_form,
                 'id': task_id,
                 'comments': comments,
-                'tags': tags
+                'comment_form': comment_form,
+                'tags': tags,
+                'tag_form': tag_form
             }
         )
 
     def post(self, request, task_id):
         '''Update or delete the specific task based on what the user submitted in the form'''
-        task = Task.objects.filter(id=task_id)
+        task = Task.objects.get(id=task_id)
         task_form = TaskForm(instance=task)
+        # comment_form = CommentForm(instance=task)
+        # tag_form = TagForm(instance=task)
         
         if 'save' in request.POST:
             task_form = TaskForm(request.POST, instance=task)
@@ -61,6 +65,14 @@ class TodoDetailView(View):
 
         elif 'delete' in request.POST:
             task.delete()
+
+        elif 'add_tag' in request.POST:
+            tag_form = TagForm(request.POST)
+            tag_form.save()
+
+        elif 'save_comment' in request.POST:
+            comment_form = CommentForm(request.POST)
+            comment_form.save()
 
         # "redirect" to the todo homepage
         return redirect('todo_list')
