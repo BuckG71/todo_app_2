@@ -1,0 +1,12 @@
+<form action="{% url 'task' id %}" method="POST">
+    {% csrf_token %}
+    {{ task_form }}
+    <input type="submit" name="save" value="Save" />
+    <input type="submit" name="delete" value="Delete" />
+</form>
+
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.body }}</li>
+    {% endfor %}
+</ul>
